@@ -97,7 +97,8 @@ namespace SnakeKISS.SnakeGame
             try
             {
                 var prevValue = gameField[headPos.Item1, headPos.Item2];
-                if(prevValue != 0)
+                gameField[headPos.Item1, headPos.Item2] = 1;
+                if (prevValue != 0)
                 {
                     if(prevValue == -1)
                     {
@@ -111,7 +112,6 @@ namespace SnakeKISS.SnakeGame
                         return;
                     }
                 }
-                gameField[headPos.Item1, headPos.Item2] = 1;
             }catch(IndexOutOfRangeException)
             {
                 // the snake walked out of the gameField
@@ -146,7 +146,7 @@ namespace SnakeKISS.SnakeGame
         /// <returns>a random coordinate inside the gameField dimensions</returns>
         private (int,int) GetRandomCoordinate()
         {
-            return (r.Next(gameField.GetLength(0)),r.Next(gameField.GetLength(1)));
+            return (r.Next(gameField.GetLength(0)-2)+1,r.Next(gameField.GetLength(1) - 2)+1);
         }
 
         /// <summary>

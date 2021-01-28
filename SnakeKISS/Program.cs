@@ -56,6 +56,11 @@ namespace SnakeKISS
                 if (snakeGame.IsDead)
                 {
                     Console.Write(snakeGame.GetDeathString());
+                    Thread.Sleep(500);
+                    while (Console.KeyAvailable)
+                    {
+                        Console.ReadKey(true);
+                    }
                 }
                 else
                 {
