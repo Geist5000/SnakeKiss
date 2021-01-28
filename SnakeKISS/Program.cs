@@ -1,5 +1,6 @@
 ﻿using SnakeKISS.SnakeGame;
 using System;
+using System.Threading;
 
 namespace SnakeKISS
 {
@@ -7,15 +8,30 @@ namespace SnakeKISS
     {
         static void Main(string[] args)
         {
-            Game snakeGame = new Game(10, 10, 3);
+            int gameWidth = 30;
+            int gameHeight = 30;
+            Game snakeGame = new Game(gameWidth,gameHeight, 3);
+            Console.Title = "Snake";
+            Console.CursorVisible = false;
+
+
+            Console.WindowWidth = gameWidth*2;
+            Console.WindowHeight = gameHeight;
+            Console.SetBufferSize(gameWidth*2, gameHeight);
 
             while (!snakeGame.IsDead)
             {
-                snakeGame.GameLoop();
-                snakeGame.PrintGameState();
-                string dir = Console.ReadLine();
-                dir = dir.ToUpper();
-                switch (dir)
+                
+
+                
+                ConsoleKeyInfo key = new ConsoleKeyInfo();
+                // flush stream to prevent issues while holding a key down
+                while (Console.KeyAvailable)
+                {
+                    key = Console.ReadKey(true);
+                }
+                char dir = key.KeyChar;
+                switch (dir.ToString().ToUpper())
                 {
                     case "W":
                         snakeGame.NextDirection = Game.DIRECTION_UP;
@@ -30,7 +46,24 @@ namespace SnakeKISS
                         snakeGame.NextDirection = Game.DIRECTION_RIGTH;
                         break;
                 }
+            
+                
+                snakeGame.GameLoop();
+                
+                if (snakeGame.IsDead)
+                {
+                    Console.Write(snakeGame.GetDeathString());
+                }
+                else
+                {
+                    Console.SetCursorPosition(0, 0);
+                    Console.Write(snakeGame.ToString());
+                    Thread.Sleep(150);
+                }
             }
+
+            Console.Write("\nDrücke irgendeine Taste zum schließen...");
+            Console.ReadKey(false);
         }
     }
 }

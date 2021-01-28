@@ -14,6 +14,7 @@ namespace SnakeKISS.SnakeGame
 
         (int, int) currentDirection = DIRECTION_UP;
         (int, int) nextDirection = DIRECTION_UP;
+        private int startLength;
 
         /// <summary>
         /// every value greater than zero is the snake. The value of the snake part describes the age, if age is greater than the lenght, the body part dies)
@@ -32,10 +33,11 @@ namespace SnakeKISS.SnakeGame
         /// </summary>
         (int, int) headPos;
 
-        public Game(int width, int height, int startLenght)
+        public Game(int width, int height, int startLength)
         {
+            this.startLength = startLength;
             this.gameField = new int[width, height];
-            this.age = startLenght;
+            this.age = startLength;
             dead = false;
             r = new Random();
             PlaceSnakeRandom();
@@ -78,6 +80,8 @@ namespace SnakeKISS.SnakeGame
         {
             get{ return dead; }
         }
+
+        public int Score { get { return age - startLength; } }
 
         private void MoveSnake()
         {
@@ -185,6 +189,60 @@ namespace SnakeKISS.SnakeGame
                 }
                 Console.WriteLine(line);
             }
+        }
+
+        private char GetCharRep(int value)
+        {
+            var charRep = '.';
+            switch (value)
+            {
+                case int n when (n > 0):
+                    charRep = '#';
+                    break;
+                case -1:
+                    charRep = '@';
+                    break;
+            }
+
+            return charRep;
+        }
+
+        public char[,] ToCharArray()
+        {
+            // multiply width by 2 to place a space between columns
+            char[,] result = new char[gameField.GetLength(0) * 2, gameField.GetLength(1)];
+            for (int x = 0; x < gameField.GetLength(0); x++)
+            {
+                for (int y = 0; y < gameField.GetLength(0); y++)
+                {
+                    var current = gameField[x, y];
+                    
+
+                    result[x * 2, y] = GetCharRep(current);
+                }
+            }
+            return result;
+        }
+
+        public override String ToString()
+        {
+            string result = "";
+            for (int y = 0; y < gameField.GetLength(1); y++)
+            {
+                for (int x = 0; x < gameField.GetLength(0); x++)
+                {
+                    var current = gameField[x, y];
+
+
+                    result += GetCharRep(current)+" ";
+                }
+            }
+            return result;
+        }
+
+        public string GetDeathString()
+        {
+            return "Du bist gestorben\n\nScore:" + Score;
         }
     }
 }
