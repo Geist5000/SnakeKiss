@@ -10,7 +10,7 @@ namespace SnakeKISS.SnakeGame
         public static (int,int) DIRECTION_UP = (0,-1);
         public static (int,int) DIRECTION_LEFT = (-1,0);
         public static (int, int) DIRECTION_DOWN = (0,1);
-        public static (int, int) DIRECTION_RIGTH = (1,0);
+        public static (int, int) DIRECTION_RIGHT = (1,0);
 
         (int, int) currentDirection = DIRECTION_UP;
         (int, int) nextDirection = DIRECTION_UP;

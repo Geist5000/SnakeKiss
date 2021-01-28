@@ -30,20 +30,23 @@ namespace SnakeKISS
                 {
                     key = Console.ReadKey(true);
                 }
-                char dir = key.KeyChar;
-                switch (dir.ToString().ToUpper())
+                switch (key.Key)
                 {
-                    case "W":
+                    case ConsoleKey.UpArrow:
+                    case ConsoleKey.W:
                         snakeGame.NextDirection = Game.DIRECTION_UP;
                         break;
-                    case "A":
+                    case ConsoleKey.LeftArrow:
+                    case ConsoleKey.A:
                         snakeGame.NextDirection = Game.DIRECTION_LEFT;
                         break;
-                    case "S":
+                    case ConsoleKey.DownArrow:
+                    case ConsoleKey.S:
                         snakeGame.NextDirection = Game.DIRECTION_DOWN;
                         break;
-                    case "D":
-                        snakeGame.NextDirection = Game.DIRECTION_RIGTH;
+                    case ConsoleKey.RightArrow:
+                    case ConsoleKey.D:
+                        snakeGame.NextDirection = Game.DIRECTION_RIGHT;
                         break;
                 }
             
